@@ -7,21 +7,49 @@ namespace Album\Model;
 class Album
 {
     /** @var  string */
-    protected $photo_preview;
+    public $photo_preview;
     /** @var  string */
-    protected $spotify_id;
+    public $album_id;
     /** @var  string */
-    protected $spotify_url;
+    public $spotify_url;
     /** @var  string */
-    protected $name;
+    public $name;
     /** @var  string */
-    protected $album_type;
+    public $album_type;
     /** @var  string */
-    protected $href;
+    public $href;
     /** @var  string */
-    protected $type;
+    public $type;
     /** @var  string */
-    protected $uri;
+    public $uri;
+    /** @var bool */
+    public $fetched_detail;
+
+    /**
+     * Album constructor.
+     */
+    public function __construct()
+    {
+        $this->images = [];
+        $this->tracks = [];
+        $this->fetched_detail = false;
+    }
+
+
+    public function exchangeArray($data)
+    {
+        $this->photo_preview = !empty($data['photo_preview']) ? $data['photo_preview'] : null;
+        $this->album_id = !empty($data['album_id']) ? $data['album_id'] : null;
+        $this->spotify_url = !empty($data['spotify_url']) ? $data['spotify_url'] : null;
+        $this->name = !empty($data['name']) ? $data['name'] : null;
+        $this->album_type = !empty($data['album_type']) ? $data['album_type'] : null;
+        $this->href = !empty($data['href']) ? $data['href'] : null;
+        $this->type = !empty($data['type']) ? $data['type'] : null;
+        $this->uri = !empty($data['uri']) ? $data['uri'] : null;
+        $this->images = !empty($data['images']) ? $data['images'] : null;
+        $this->tracks = !empty($data['tracks']) ? $data['tracks'] : null;
+        $this->fetched_detail = !empty($data['fetched_detail']) ? $data['fetched_detail'] : null;
+    }
 
     /**
      * @return string
@@ -44,18 +72,18 @@ class Album
     /**
      * @return string
      */
-    public function getSpotifyId()
+    public function getAlbumId()
     {
-        return $this->spotify_id;
+        return $this->album_id;
     }
 
     /**
-     * @param string $spotify_id
+     * @param string $album_id
      * @return self
      */
-    public function setSpotifyId($spotify_id)
+    public function setAlbumId($album_id)
     {
-        $this->spotify_id = $spotify_id;
+        $this->album_id = $album_id;
         return $this;
     }
 
@@ -167,5 +195,52 @@ class Album
         return $this;
     }
 
+    /**
+     * @return AlbumTrack[]
+     */
+    public function getTracks() {
+        return $this->tracks;
+    }
+
+    /**
+     * @param AlbumTrack $track
+     */
+    public function addTrack(AlbumTrack $track)
+    {
+        $this->tracks[] = $track;
+    }
+
+    /**
+     * @return AlbumImage[]
+     */
+    public function getImages() {
+        return $this->images;
+    }
+
+    /**
+     * @param AlbumImage $image
+     */
+    public function addImage(AlbumImage $image)
+    {
+        $this->images[] = $image;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isFetchedDetail()
+    {
+        return $this->fetched_detail;
+    }
+
+    /**
+     * @param boolean $fetched_detail
+     * @return self
+     */
+    public function setFetchedDetail($fetched_detail)
+    {
+        $this->fetched_detail = $fetched_detail;
+        return $this;
+    }
 
 }

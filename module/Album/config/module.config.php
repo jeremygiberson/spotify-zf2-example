@@ -4,6 +4,7 @@ use Album\Controller\Factory\SearchControllerFactory;
 use Album\Delegator\SpotifyApiCacheFactory;
 use Album\Service\AlbumServiceFactory;
 use Hotdog\SpotifyExampleApi\SpotifyApi;
+use Zend\Db\Adapter\AdapterAbstractServiceFactory;
 
 return [
     'controllers' => [
@@ -19,7 +20,7 @@ return [
                     'route' => '/album[/:action][/:id]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
+                        'id' => '[0-9a-zA-Z]+',
                     ],
                     'defaults' => [
                         'controller' => 'Album\Controller\Search',
@@ -45,6 +46,9 @@ return [
         'factories' => [
             'AlbumService' => AlbumServiceFactory::class
         ],
+        'abstract_factories' => [
+            AdapterAbstractServiceFactory::class
+        ],
         'delegators' => [
             SpotifyApi::class => [
                 'spotify-api-cache-factory'
@@ -65,5 +69,20 @@ return [
                 'throw_exceptions' => false
             ],
         ]
+    ],
+    'db' => [
+        'adapters' => [
+            'AlbumDb' => [
+                'driver' => 'Pdo_Sqlite',
+                'database' => 'data/album.sqlite'
+            ]
+        ]
+    ],
+    'migrations' => [
+        'album' => [
+            'dir' => 'data/migration-album',
+            'namespace' => 'Album\Migrations',
+            'adapter' => 'AlbumDb'
+        ],
     ]
 ];

@@ -37,11 +37,11 @@ use Album\Model\Album;
             ?>
             <div class="col-xs-4 album">
                 <div class="album-cover-image center-block">
-                    <a href="<?=$this->url('album', ['action'=>'view', 'id' => $album->getSpotifyId()])?>">
+                    <a href="<?=$this->url('album', ['action'=>'view', 'id' => $album->getAlbumId()])?>">
                         <img src="<?= $album->getPhotoPreview() ?: 'http://communityvoices.post-gazette.com/spot.png'?>" class="album-image">
                     </a>
                 </div>
-                <a href="<?=$this->url('album', ['action'=>'view', 'id' => $album->getSpotifyId()])?>"><?=$album->getName()?></a>
+                <a href="<?=$this->url('album', ['action'=>'view', 'id' => $album->getAlbumId()])?>"><?=$album->getName()?></a>
             </div>
             <?php
         }

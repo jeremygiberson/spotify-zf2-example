@@ -7,13 +7,21 @@ namespace Album\Model;
 class AlbumImage
 {
     /** @var  string */
-    protected $album_id;
+    public $album_id;
     /** @var  int */
-    protected $height;
+    public $height;
     /** @var  int */
-    protected $width;
+    public $width;
     /** @var  string */
-    protected $url;
+    public $url;
+
+    public function exchangeArray($data)
+    {
+        $this->album_id = !empty($data['album_id']) ? $data['album_id'] : null;
+        $this->height = !empty($data['height']) ? $data['height'] : null;
+        $this->width = !empty($data['width']) ? $data['width'] : null;
+        $this->url = !empty($data['url']) ? $data['url'] : null;
+    }
 
     /**
      * @return string
@@ -29,7 +37,7 @@ class AlbumImage
      */
     public function setAlbum($album)
     {
-        $this->album_id = $album->getSpotifyId();
+        $this->album_id = $album->getAlbumId();
         return $this;
     }
 

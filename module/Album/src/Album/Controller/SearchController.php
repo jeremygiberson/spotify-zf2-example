@@ -34,9 +34,7 @@ class SearchController extends AbstractActionController implements AlbumServiceA
 
     public function ViewAction()
     {
-        /** @var Request $request */
-        $request = $this->getRequest();
-        $albumId = $request->getParam('id');
+        $albumId = $this->params()->fromRoute('id');
 
         $album = $this->getAlbumService()->get($albumId);
         return new ViewModel(['album' => $album]);
